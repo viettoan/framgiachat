@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../layouts/head %>
+</head>
+<body>
+    <% include layouts/header %>
+
+    <div id="popup_location" class="md_parent modal md-effect-1">
+        <div class="modal-dialog" style="width: 300px; margin-top: 200px;">
+            <div class="modal-content">
+                <h4 class="st_sound_title">Hỏi vị trí của khách truy cập</h4>
+                <div class="modal-body">				
+                    <span onclick="change_status_location(this)" id="status_location" class="offvbot" data-id="1">Tắt xin quyền vị trí</span>
+                    <p class="vbot_note">
+                    Tính năng hỏi vị trí khách hàng giúp vChat đưa đến thông tin khách hàng chính xác hơn cho bạn mỗi khi khách hàng chia sẻ thông tin vị trí.
+                    </p>
+                </div>
+                <span class="mdclose" onclick="close_setting_sound(this)">×</span>
+            </div>
+        </div>
+    </div>    
+    
+    <div id="vbot_line" class="hide">
+    <span class="vbl_text">Bạn đang ở chế độ kích hoạt vBOT</span> <a href="/vbot/">Cài đặt vBOT</a> <span class="vbl_setup" onclick="show_modal('vbot')">Bật/Tắt vBOT</span>
+    </div>   
+
+    <div id="vbot" class="md_parent modal md-effect-1">
+        <div class="modal-dialog" style="width: 300px; margin-top: 200px;">
+            <div class="modal-content">
+                <h4 class="st_sound_title">Kích hoạt vBOT trả lời tự động</h4>
+                <div class="modal-body">				
+                    <p>Bạn phải cài đặt ít nhất 10 luồng chat cho vBOT thì mới có thể kích hoạt chế độ vBOT <a href="/vbot/">cài đặt vBOT ngay</a></p>
+                </div>
+                <span class="mdclose" onclick="close_setting_sound(this)">×</span>
+            </div>
+        </div>
+    </div>
+    <div id="popup_sound" class="md_parent modal md-effect-1">
+        <div class="modal-dialog" style="width: 300px; margin-top: 200px;">
+            <div class="modal-content">
+                <h4 class="st_sound_title">Cài đặt âm thanh thông báo</h4>
+                <div class="modal-body">
+                        <ul class="st_sound_list">
+                            <li><p style="float: left;margin: 0px 5px 0 0;"><span data-name="st_sound_online" onclick="set_setting_sound(this)" id="new_custom_online" class="sp_icon_sound "><i class="sp_ic sound_on"></i>Khi có khách truy cập website</span></p><span style="color: #0071E1;font-style: italic;cursor: pointer;" onclick="$('#vgc_audio_visit')[0].play()">(Nghe thử)</span></li>
+                            <li><p style="float: left;margin: 0px 5px 0 0;"><span data-name="vgc_audio_message" onclick="set_setting_sound(this)" id="new_chat" class="sp_icon_sound"><i class="sp_ic sound_on"></i>Khi có khách chat đến</span></p><span style="color: #0071E1;font-style: italic;cursor: pointer;" onclick="$('#vgc_audio_message')[0].play()">(Nghe thử)</span></li>
+                        </ul>
+                </div>
+                <span class="mdclose" onclick="close_setting_sound(this)">×</span>
+            </div>
+        </div>
+    </div>
+    <div id="popup_online" class="md_parent modal md-effect-1">
+        <div class="modal-dialog" style="width: 300px; margin-top: 200px;">
+            <div class="modal-content">
+                <h4 class="st_sound_title">Danh sách hỗ trợ viên online</h4>
+                <div class="modal-body">
+
+                </div>
+                <span class="mdclose" onclick="close_setting_sound(this)">×</span>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="vchat_loading" class="hide">
+        <p>Đang tải</p>
+        <img src="/themes/v1/images/loading11.gif" />
+    </div>
+    <div class="hide" id="bg_payment_alert" onclick="hide_payment_alert()"></div>
+    <div class="hide" id="payment_account_alert">
+        <div class="pm_alert_title">[Gia hạn hoặc Nâng cấp] gói sử dụng <span class="pm_alert_close" onclick="hide_payment_alert()">Đóng</span></div>
+        <div class="pm_alert_content">
+            Để <b>GIA HẠN</b> hoặc <b>NÂNG CẤP</b> gói sử dụng, bạn vui lòng thông báo cho tài khoản chính để thực hiện việc này:<br /><br />
+            Tên: <b>toan pham</b><br />
+            Email: <b>viettoan290696@gmail.com</b><br />
+            Số ĐT: <b></b><br />
+
+        </div>
+    </div>
+    <div id="vgc_helpsupport">
+        <div class="sp_all_chat">
+            <div class="sp_item_chat sp_item_his">
+                <div id="resizable_s" class=" " data-position="right" data-step="1" data-intro="Đây là '<b>Bảng điều khiển</b> chat hỗ trợ khách hàng dành cho chủ website và nhân viên hỗ trợ tư vấn">         		
+                        <div id="spl">
+                        <div class="header_left " data-position="right" data-step="2" data-intro="'<b>Bảng điều khiển</b>' gồm có 02 Tab<br> 1. <b>Khách hàng chat gần đây</b><br> 2. <b>Khách đang online</b>">
+                            <span id="tab_history" class="title sp_ac tab_active" onclick="show_list_online(this, 'history_chat');"><i class="sp_ic icon_history" ></i>Khách hàng chat gần đây <i id="tab_hischat_count" class="vgc_hide"></i></span>
+                            <span id="tab_customer" class="title sp_ac" onclick="show_list_online(this, 'customer_online');" data-step="4" data-intro="Tab <b>Khách đang online</b> giúp bạn có thể nhìn thấy những khách hàng đang online trên website của bạn"><i class="sp_ic icon_listonline"></i>Khách đang online</span>
+                        </div>
+                        <div id="history_chat" class="support_listleft" data-position="right" data-step="3" data-intro="Trong tab <b>Khách hàng chat gần đây</b> gồm có 02 phần <br>1. <b>'Yêu cầu chat'</b>: Nơi hiển thị những khách hàng chủ động chat với bạn lần đầu và cũng có thể là khách hàng cũ trong trường hợp người đó đã từng chat với bạn nhưng đã từ lâu<br>2. <b>Lịch sử chat</b>: Nơi hiển thị những người chat gần đây nhất của bạn, nếu những người này chat lại với bạn thì nó cũng sẽ hiện thông báo đỏ ở đây. <br> - Ở cả 02 phần <b>Yêu cầu chat</b> và <b>Lịch sử chat</b> bạn đều có thể '<b>Chat</b>' hoặc '<b>Gửi tin nhắn</b>' cho người đó bằng cách '<b>Click</b>' vào người đó">
+                            <div class="item" id="newchat_support">
+                                <p class="spl_tt">Yêu cầu chat:</p>
+                                <div class="spl_req"></div>
+                            </div>
+                            <div class="item" id="hischat_support">
+                                <p class="spl_tt">Lịch sử chat:
+                                    <input type="text" value="" placeholder="Tìm khách hàng" onkeyup="searchListUserHistory(this)" id="sp_search_history" class="sp_search_history" />
+                                    <i class="sp_ic icon_search"></i>
+                                </p>
+        
+                                <div class="spl_req"></div>
+                            </div>
+                        </div>          
+                            <div id="customer_online" class="support_listleft hide " data-position="right" data-step="5" data-intro="- Nếu có ai đang truy cập vào website của bạn thì nó sẽ hiển thị ở đây. <br> - Để <b>Chat</b> hoặc <b>Gửi tin nhắn</b> bạn hãy click vào khách hàng đó<br>- Bạn có thể di chuột vào IP để hiển thị thông tin địa điểm của khách hàng đó">
+                            <table class="table table-hover" cellpadding="5" cellspacing="0" border="0">
+                                <thead>
+                                    <tr class="headtbl">
+                                        <td nowrap="nowrap" title="Ip hiện tại của khách hàng đang truy cập">Ip</td>
+                                        <td nowrap="nowrap" title="Tổng số link khách hàng đã xem">Xem</td>
+                                        <td nowrap="nowrap" title="Nguồn truy cập">Đến từ</td>
+                                        <td nowrap="nowrap" title="Giờ">Thời gian</td>
+                                        <td nowrap="nowrap" title="Tiêu đề bài viết khách hàng đang xem">Tiêu đề xem gần nhất</td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            </div>         
+                    </div>
+                </div>
+            </div>
+            <div class="sp_item_chat sp_item_box">
+                <div id="spr" class="resizable">
+                    <div class="check_setup">
+                        <h2>Sao chép và Dán mã vào tất cả các trang web mà bạn muốn hiển thị ô chat trước thẻ &lt;/body&gt;</h2>
+                        <div id="boxcode">
+                            <div class="btncode">
+                                <button id="btn_get_code" type="button" data-loading-text="Copy thành công" onmouseover="javascript:getCode('btn_get_code', 'get_code_content');" class="">
+                                    Sao chép mã nhúng
+                                </button>
+                            </div>
+                            <pre id="get_code_content" onmouseover="getCodeThis(this);">&lt;script lang=&quot;javascript&quot;&gt;(function() {var pname = ( (document.title !='')? document.title : ((document.querySelector('h1') != null)? document.querySelector('h1').innerHTML : '') );var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async=1; ga.src = '//live.vnpgroup.net/js/web_client_box.php?hash=7bc885bcd3e033e5b18d70b4b61ba202&amp;data=eyJzc29faWQiOjUyNTc3ODQsImhhc2giOiI3ZDM0OTZjZTJmYzk5YjY3ZTJjYmQ3NDIxNGU2Njg3ZiJ9&amp;pname='+pname;var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();&lt;/script&gt;	</pre>
+                        </div>
+                        <p>
+                            <a class="btn_yellow" href="javascript:void(0);" onclick="create_chat_box({id:1515941,iPro:0,msg:''});">Chat với kỹ thuật</a>
+                            &nbsp;Hoặc&nbsp;
+                            <a target="_blank" class="btn_yellow" href="/home/review_client.php?uid=5257784">vChat hoạt động</a>
+                        </p>
+                    </div>
+                    <div id="banner_sp">
+                        <div style="overflow: hidden; width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="sp_ad" class="hide">
+            <span class="close_ad" onclick="close_ad()">x</span>
+                            <a class="ad_sp_right" href="http://vchat.vn/vchat_landing/noel/index.html" target="_blank" title="vChat Marketing tháng 12"><img src="../pictures/advertive/kfg1514342628.png" /></a>
+        </div>
+    </div>
+    <a class="vc_group" href="https://www.facebook.com/groups/251299398613108/" target="_blank">Group hỗ trợ vChat</a>
+    <span class="vc_intro" onclick="show_intro({position:'right'});">Giới thiệu</span>
+    <div id="popup_close_ovl" class="hide"></div>
+    <div id="popup_close_ad" class="hide">
+        <span class="close_ad" onclick="close_popup_ad()">x</span>
+        <h2>Ẩn mục quảng cáo này</h2>
+        <div class="pp_ad_content">
+            Nâng cấp gói vChat trả phí để không bị làm phiền bởi quảng cáo này cũng như được sử dụng tất cả những tính năng tuyệt với từ vChat
+        </div>
+        <p class="pp_action">
+            <span class="close_pp_ad" onclick="close_pp_add()">Lúc khác</span>
+            <a class="pp_upgrade" href="/home/account.php">Nâng cấp ngay</a>
+        </p>
+    </div>
+    <div class="hide" id="ovl_aution"></div>
+    <div id="ifm_aution" data-id="0" class="hide">
+        <div id="content_aution">
+            <span class="au_close" onclick="vgCloseChatPPC()">Close</span>
+            <iframe id="ifvatgia" class="ifvatgia" src=""></iframe>
+        </div>
+    </div>
+
+    <div id="goship_ovl" class="hide" onclick="hide_modal_account_goship()"></div>
+    <div id="goship" class="hide">
+        <div class="content_goship">
+            <div class="logoht"><span class="logovchat logo_hoptac"></span>Vs<span class="logogoship logo_hoptac"></span></div>
+            <p class="goship_note">vChat và Goship hợp tác để mang lại những giá trị mới cho khách hàng của vChat đang sử dụng gói trả phí</p>
+            <h3 class="gs_title">Tạo tài khoản Goship để sử dụng tính năng giao hàng</h3>
+            <ul class="gs_field">
+                <li>
+                    Họ Tên:<br />
+                    <input type="text" data-name="goname" value="toan pham" placeholder="vd: Nguyễn Văn A" />
+                </li>
+                <li>
+                    Email:<br />
+                    <input type="text" data-type="email" data-name="goemail" value="viettoan290696@gmail.com" placeholder="vd: nguyenvana@gmail.com" />
+                </li>
+                <li>
+                    Điện thoại:<br />
+                    <input type="text" data-type="phone" data-name="gophone" value="" placeholder="vd: 0985xxxxxx" />
+                </li>
+                <li>
+                    Tên shop:<br />
+                    <input type="text" value=""  data-name="goshop" placeholder="vd: nambotique" />
+                </li>
+                <li>
+                    Password:<br />
+                    <input type="password" value="" data-name="gopass" placeholder="password" />
+                </li>
+                <li><p id="gs_error"></p></li>
+                <li>
+                    <input type="button" class="gs_create" value="Tạo tài khoản" onclick="create_account_goship()" />
+                    <img id="gs_loading" class="hide" src="/themes//v1/images/loading.gif" />
+                    Hoặc
+                    <span class="gs_cancel" onclick="hide_modal_account_goship()">Hủy</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <% include ../layouts/script %>
+</body>
+</html>
