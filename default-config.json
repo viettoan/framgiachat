@@ -1,0 +1,8 @@
+{
+    "mongoAppDb": {
+        "host": "localhost",
+        "db": "chat_sys",
+        "port": 27017
+ 
+    }
+}
