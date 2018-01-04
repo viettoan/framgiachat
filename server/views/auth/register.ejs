@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../layouts/head %>
+</head>
+<body>
+   	<div class="wrapper">
+        <% include ../layouts/navigation %>
+
+        <div class="login_d">
+            <div class="form_log">
+                <a href="http://vchat.vn/home"><img src="images/logo.png" width="166px" style="margin-bottom: 32px;" /></a>
+                <form id="registerForm" onsubmit="return check_submit();"  class="form" name="login" action="https://vchat.vn/home/act_login.php?redirect=L2hvbWUvd2VsY29tZS5waHA=" method="post" enctype="multipart/form-data">
+                    <input type="text" name="name" id="login_loginname" placeholder="Họ tên" />
+                    <br />
+                    <input type="email" name="email" id="login_loginname" placeholder="Email" />
+                    <br />
+                    <input type="password" name="password" id="login_password" placeholder="Mật khẩu" />
+                    <br />
+                    <input type="password" name="passwordConfirm" id="login_password" placeholder="Mật khẩu" />
+                    <br />
+                    <input type="submit" value="Đăng ký" />
+                    <br />
+                    <div class="border">
+                        <p>
+                            <div class="border01"><span>Hoặc</span></div>
+                        </p>
+                    </div>
+                    <a class="button google" href="https://id.vatgia.com/dang-nhap/google/?_cont=%2F%2Fvchat.vn%2Fhome%2Fidvg_return.php%3Fredirect%3DL2hvbWUvbG9naW4ucGhwPw--&amp;service=vchat&amp;remember=1">Đăng nhập với <b>Google</b></a><br />
+                    <a class="button facebook" href="https://id.vatgia.com/dang-nhap/facebook/?_cont=%2F%2Fvchat.vn%2Fhome%2Fidvg_return.php%3Fredirect%3DL2hvbWUvbG9naW4ucGhwPw--&amp;service=vchat&amp;remember=1">Đăng nhập với <b>Facebook</b></a>
+                </form>
+            </div>
+        </div>
+
+        <% include ../layouts/footer %>  
+    </div>
+
+    <% include ../layouts/script %>
+</body>
+</html>
