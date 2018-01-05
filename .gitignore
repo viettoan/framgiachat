@@ -1,5 +1,5 @@
 /node_modules
-/server/public/images
+/public/images
 /public/storage
 /storage/*.key
 /vendor
