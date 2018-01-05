@@ -4,7 +4,7 @@ var mongodb = require('mongodb');
 exports.up = function(db, next){
     db.createCollection('media', {
         autoIndexId: true,
-        media_id: Number,
+        type_id: String,
         name: String,
         link: String
     });
