@@ -10,14 +10,15 @@
         <div class="login_d">
             <div class="form_log">
                 <a href="http://vchat.vn/home"><img src="images/logo.png" width="166px" style="margin-bottom: 32px;" /></a>
-                <form id="registerForm" onsubmit="return check_submit();"  class="form" name="login" action="https://vchat.vn/home/act_login.php?redirect=L2hvbWUvd2VsY29tZS5waHA=" method="post" enctype="multipart/form-data">
-                    <input type="text" name="name" id="login_loginname" placeholder="Họ tên" />
+                <% if (errorMessage) { %>
+                    <h3><%= errorMessage %></h3>
+                <% } %>
+                <form action="/register" method="post">
+                    <input type="email" name="email" placeholder="Email" />
                     <br />
-                    <input type="email" name="email" id="login_loginname" placeholder="Email" />
+                    <input type="password" name="password" placeholder="Mật khẩu" />
                     <br />
-                    <input type="password" name="password" id="login_password" placeholder="Mật khẩu" />
-                    <br />
-                    <input type="password" name="passwordConfirm" id="login_password" placeholder="Mật khẩu" />
+                    <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Mật khẩu" />
                     <br />
                     <input type="submit" value="Đăng ký" />
                     <br />
