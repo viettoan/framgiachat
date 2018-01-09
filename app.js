@@ -14,24 +14,25 @@ var session = require('express-session');
 
 var configDB = require('./config/database.js');
 
-// mongoose.connect(configDB.url);
+mongoose.connect(configDB.url);
 
-// require('./config/passport')(passport);
+require('./config/passport')(passport);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({secret: 'secret'}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use.apply(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 webRouter = require('./routes/web.js');
-webRouter(app);
+webRouter(app, passport);
 
 app.listen(port);
