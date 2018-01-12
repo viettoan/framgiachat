@@ -1,8 +1,7 @@
 var express = require('express');
 var app = express();
-
+var server = require("http").Server(app);
 var path = require('path');
-var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -35,4 +34,9 @@ app.use(flash());
 webRouter = require('./routes/web.js');
 webRouter(app, passport);
 
-app.listen(port);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
+var chatSocketEvent = require('./chatSocketEvent.js');
+chatSocketEvent(io);
+
+server.listen(port);
