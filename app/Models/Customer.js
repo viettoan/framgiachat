@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
-var customerSchema = new schema ({
+var customerSchema = mongoose.Schema ({
     email: {
         type: String,
         required: true,

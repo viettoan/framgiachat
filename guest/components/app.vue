@@ -45,17 +45,12 @@
 				</div> <!-- end chat-history -->
 
 				<p class="chat-feedback">Your partner is typing…</p>
+				<fieldset>
+					
+					<input type="text" v-model="guest.message" placeholder="Type your message…" @keyup.enter="sendMessage()" autofocus>
+					<input type="hidden">
 
-				<form action="#" method="post">
-
-					<fieldset>
-						
-						<input type="text" placeholder="Type your message…" autofocus>
-						<input type="hidden">
-
-					</fieldset>
-
-				</form>
+				</fieldset>
 			</div>
 			
 
@@ -69,9 +64,12 @@ export default {
 		return {
 			guest: {
 				name: '',
-				email: ''
+				email: '',
+				message: '',
+				appId: '',
+				type: 1
 			},
-			error: ''
+			error: '',
 		}
 	},
 	methods: {
@@ -88,6 +86,10 @@ export default {
 			}
 			$('#chat-content').show();
 			$('#register-chat').hide();
+		},
+		sendMessage: function() {
+			this.guest.appId = this.$parent.getAppId();
+			this.$socket.emit('guest-send-message', this.guest);
 		}
 	}
 };
@@ -99,6 +101,10 @@ fieldset {
 	border: 0;
 	margin: 0;
 	padding: 0;
+}
+fieldset input {
+	margin-left: 30px;
+	margin-bottom: 30px;
 }
 
 h4, h5 {
