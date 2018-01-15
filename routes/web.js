@@ -1,3 +1,6 @@
+var authMiddleware = require('../app/Middleware/AuthMiddleware.js');
+var messageController = require('../app/Controllers/Agent/MessageController.js');
+
 module.exports = function(app, passport) {
     app.get('/', (req, res) => {
         res.render('index');
@@ -23,9 +26,7 @@ module.exports = function(app, passport) {
         failureFlash : true
     }));
 
-    app.get('/support', isLoggedIn, (req, res) => {
-        res.render('agent/index');
-    });
+    app.get('/support', authMiddleware, messageController.index);
 
     app.get('/logout', (req, res) => {
         req.logout();
@@ -33,10 +34,3 @@ module.exports = function(app, passport) {
     });
 };
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-
-    res.redirect('/');
-}

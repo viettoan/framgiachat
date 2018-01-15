@@ -2,10 +2,11 @@
 <html>
 <head>
     <% include ../layouts/head %>
+    <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
     <% include layouts/header %>
-
+    <% console.log(customers) %>
     <div id="popup_location" class="md_parent modal md-effect-1">
         <div class="modal-dialog" style="width: 300px; margin-top: 200px;">
             <div class="modal-content">
@@ -89,16 +90,31 @@
                         </div>
                         <div id="history_chat" class="support_listleft" data-position="right" data-step="3" data-intro="Trong tab <b>Khách hàng chat gần đây</b> gồm có 02 phần <br>1. <b>'Yêu cầu chat'</b>: Nơi hiển thị những khách hàng chủ động chat với bạn lần đầu và cũng có thể là khách hàng cũ trong trường hợp người đó đã từng chat với bạn nhưng đã từ lâu<br>2. <b>Lịch sử chat</b>: Nơi hiển thị những người chat gần đây nhất của bạn, nếu những người này chat lại với bạn thì nó cũng sẽ hiện thông báo đỏ ở đây. <br> - Ở cả 02 phần <b>Yêu cầu chat</b> và <b>Lịch sử chat</b> bạn đều có thể '<b>Chat</b>' hoặc '<b>Gửi tin nhắn</b>' cho người đó bằng cách '<b>Click</b>' vào người đó">
                             <div class="item" id="newchat_support">
-                                <p class="spl_tt">Yêu cầu chat:</p>
-                                <div class="spl_req"></div>
-                            </div>
-                            <div class="item" id="hischat_support">
-                                <p class="spl_tt">Lịch sử chat:
-                                    <input type="text" value="" placeholder="Tìm khách hàng" onkeyup="searchListUserHistory(this)" id="sp_search_history" class="sp_search_history" />
-                                    <i class="sp_ic icon_search"></i>
-                                </p>
-        
-                                <div class="spl_req"></div>
+                                <p class="spl_tt">All chat:</p>
+                                <div class="spl_req">
+                                    <table class="table table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for(var i=0; i < customers.length; i++) {%>
+                                                <tr class="guest-user">
+                                                    <td>
+                                                        <%= customers[i].name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= customers[i].email %>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table> 
+                                </div>
                             </div>
                         </div>          
                             <div id="customer_online" class="support_listleft hide " data-position="right" data-step="5" data-intro="- Nếu có ai đang truy cập vào website của bạn thì nó sẽ hiển thị ở đây. <br> - Để <b>Chat</b> hoặc <b>Gửi tin nhắn</b> bạn hãy click vào khách hàng đó<br>- Bạn có thể di chuột vào IP để hiển thị thông tin địa điểm của khách hàng đó">
@@ -140,7 +156,69 @@
                         <div style="overflow: hidden; width: 100%;"></div>
                     </div>
                 </div>
+                <div id="chat-box" class="resizable">
+                        <div class="menu">
+                                <div class="back"><i class="fa fa-chevron-left"></i> <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                                <div class="name">Alex</div>
+                                <div class="last">18:09</div>
+                            </div>
+                        <ol class="chat">
+                            <li class="other">
+                                <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                            <div class="msg">
+                                <p>Hola!</p>
+                                <p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
+                                <time>20:17</time>
+                            </div>
+                            </li>
+                            <li class="self">
+                                <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                            <div class="msg">
+                                <p>Puff...</p>
+                                <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
+                                <p>Mejor otro día</p>
+                                <time>20:18</time>
+                            </div>
+                            </li>
+                            <li class="other">
+                                    <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                                <div class="msg">
+                                    <p>Hola!</p>
+                                    <p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
+                                    <time>20:17</time>
+                                </div>
+                                </li>
+                                <li class="self">
+                                    <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                                <div class="msg">
+                                    <p>Puff...</p>
+                                    <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
+                                    <p>Mejor otro día</p>
+                                    <time>20:18</time>
+                                </div>
+                                </li>
+                                <li class="other">
+                                        <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                                    <div class="msg">
+                                        <p>Hola!</p>
+                                        <p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
+                                        <time>20:17</time>
+                                    </div>
+                                    </li>
+                                    <li class="self">
+                                        <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                                    <div class="msg">
+                                        <p>Puff...</p>
+                                        <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
+                                        <p>Mejor otro día</p>
+                                        <time>20:18</time>
+                                    </div>
+                                    </li>
+                        </ol>
+                        <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
+                </div>
             </div>
+            
         </div>
         <div id="sp_ad" class="hide">
             <span class="close_ad" onclick="close_ad()">x</span>
