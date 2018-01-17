@@ -8,7 +8,9 @@ var detailSchema = new schema({
     },
     ip: String,
     browser: String,
-    time: Date
+    time: Date,
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('detail', detailSchema);

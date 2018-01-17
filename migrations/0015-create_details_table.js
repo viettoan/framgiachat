@@ -6,7 +6,9 @@ exports.up = function(db, next){
         customer_id: String,
         ip_address: String,
         browser: String,
-        time: Date
+        time: Date,
+        created_at: Date,
+        updated_at: Date
     });
     next();
 };

@@ -5,13 +5,7 @@
 <script src="/js/v2/jquery.colorbox-min.js"></script>
 <script src="/js/v2/v1.js"></script>
 <script src="/js/main.js"></script>
+<script src="socket.io/socket.io.js"></script>
 <script>
-    (function() {
-		var ga = document.createElement('script'); 
-		ga.type = 'text/javascript';
-		ga.async=1;
-		ga.src = 'http://localhost:3000/js/bundle.js'
-		var s = document.getElementsByTagName('head')[0];
-		s.appendChild(ga)
-	})();
+	var socket = io('http://localhost:3000/');
 </script>

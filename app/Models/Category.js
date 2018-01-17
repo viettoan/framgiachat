@@ -14,7 +14,9 @@ var categorySchema = new schemaa({
     status: {
         type: Number,
         default: true
-    }
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('category', categorySchema);

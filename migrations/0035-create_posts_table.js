@@ -7,7 +7,9 @@ exports.up = function(db, next){
         media_id: String,
         title: String,
         content: String,
-        status: Number
+        status: Number,
+        created_at: Date,
+        updated_at: Date
     });
     next();
 };

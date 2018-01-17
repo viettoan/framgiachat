@@ -11,7 +11,9 @@ exports.up = function(db, next){
         gender: Number,
         address: String,
         role: Number,
-        status: Number
+        status: Number,
+        created_at: Date,
+        updated_at: Date
     });
     next();
 };

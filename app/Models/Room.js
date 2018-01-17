@@ -13,7 +13,9 @@ var roomSchema = new schema({
     status: {
         type: Number,
         default: true
-    } 
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('room', roomSchema);

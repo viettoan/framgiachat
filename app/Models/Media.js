@@ -13,7 +13,9 @@ var mediaSchema = new schema({
     link: {
         type: String,
         required: true
-    }
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('media', mediaSchema);

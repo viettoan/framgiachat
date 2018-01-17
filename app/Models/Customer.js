@@ -14,7 +14,9 @@ var customerSchema = mongoose.Schema ({
     status: {
         type: Number,
         default: 1
-    }
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('customer', customerSchema);

@@ -6,6 +6,10 @@ var messageSchema = new schema({
         type: String,
         required: true
     },
+    user_id: {
+        type: String,
+        required: true
+    },
     sender_id: {
         type: String,
         required: true
@@ -25,7 +29,9 @@ var messageSchema = new schema({
     status: {
         type: Number,
         default: 1
-    }
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('message', messageSchema);

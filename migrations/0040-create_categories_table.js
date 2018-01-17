@@ -7,7 +7,9 @@ exports.up = function(db, next){
         type_id: String,
         name: String,
         description: String,
-        status: Number
+        status: Number,
+        created_at: Date,
+        updated_at: Date
     })
     next();
 };
