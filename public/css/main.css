@@ -74,7 +74,7 @@
     margin: 0;
     margin-top: 60px;
     margin-bottom: 10px;
-    max-height: 400px;
+    height: 435px;
     overflow-y: scroll;
 }
 .chat li {
@@ -288,9 +288,8 @@ emoji.funny{background-image: url(https://i.imgur.com/qKia58V.png);}
 /* T Y P E */
 
 input.textarea {
-    position: absolute;
-    bottom: 270px;
-    width: 100%;
+
+    width: 90%;
     height: 50px;
     z-index: 99;
     background: #fafafa;
@@ -298,6 +297,7 @@ input.textarea {
     outline: none;
     padding-left: 55px;
     padding-right: 55px;
+    margin-right: 10px;
     color: #666;
     font-weight: 400;
 }

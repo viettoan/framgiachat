@@ -10,7 +10,9 @@ var userSchema = mongoose.Schema({
     birthday: Date,
     gender: Number,
     address: String,
-    role: Number
+    role: Number,
+    created_at: Date,
+    updated_at: Date
 });
 
 userSchema.methods.generateHash = function(password) {

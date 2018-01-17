@@ -28,6 +28,7 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "method-override": "~2.3.6",
+    "mongodb-migrate": "^2.0.2",
     "mongoose": "~4.13.1",
     "morgan": "~1.7.0",
     "node-sass": "^4.5.3",
@@ -37,6 +38,7 @@
     "passport-local": "~1.0.0",
     "passport-twitter": "~1.0.4",
     "sass-loader": "^6.0.6",
+    "socket.io": "^2.0.4",
     "style-loader": "^0.18.2",
     "vue": "^2.5.13",
     "vue-hot-reload-api": "^2.1.0",
@@ -44,7 +46,6 @@
     "vue-loader": "^13.0.4",
     "vue-socket.io": "^2.1.1-a",
     "vue-template-compiler": "^2.3.4",
-    "webpack": "^3.0.0",
-    "socket.io": "^2.0.4"
+    "webpack": "^3.0.0"
   }
 }

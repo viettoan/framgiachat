@@ -6,7 +6,9 @@ exports.up = function(db, next){
         autoIndexId: true,
         type_id: String,
         name: String,
-        link: String
+        link: String,
+        created_at: Date,
+        updated_at: Date
     });
     next();
 };

@@ -8,7 +8,9 @@ var typeSchema = new schema({
     },
     description: {
         type: String
-    }
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('type', typeSchema);

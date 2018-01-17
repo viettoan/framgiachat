@@ -1,5 +1,6 @@
 var authMiddleware = require('../app/Middleware/AuthMiddleware.js');
 var messageController = require('../app/Controllers/Agent/MessageController.js');
+var guestUserController = require('../app/Controllers/Agent/GuestUserController.js');
 
 module.exports = function(app, passport) {
     app.get('/', (req, res) => {
@@ -26,11 +27,13 @@ module.exports = function(app, passport) {
         failureFlash : true
     }));
 
-    app.get('/support', authMiddleware, messageController.index);
+    app.get('/support', authMiddleware, guestUserController.index);
 
     app.get('/logout', (req, res) => {
         req.logout();
         res.redirect('/');
     });
+
+    app.get('/show-message-guest-user', messageController.index);
 };
 

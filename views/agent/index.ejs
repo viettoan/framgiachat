@@ -102,7 +102,7 @@
                                         </thead>
                                         <tbody>
                                             <% for(var i=0; i < customers.length; i++) {%>
-                                                <tr class="guest-user">
+                                                <tr class="guest-user" id="<%= customers[i]._id %>">
                                                     <td>
                                                         <%= customers[i].name %>
                                                     </td>
@@ -163,57 +163,7 @@
                                 <div class="last">18:09</div>
                             </div>
                         <ol class="chat">
-                            <li class="other">
-                                <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-                            <div class="msg">
-                                <p>Hola!</p>
-                                <p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
-                                <time>20:17</time>
-                            </div>
-                            </li>
-                            <li class="self">
-                                <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-                            <div class="msg">
-                                <p>Puff...</p>
-                                <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
-                                <p>Mejor otro día</p>
-                                <time>20:18</time>
-                            </div>
-                            </li>
-                            <li class="other">
-                                    <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-                                <div class="msg">
-                                    <p>Hola!</p>
-                                    <p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
-                                    <time>20:17</time>
-                                </div>
-                                </li>
-                                <li class="self">
-                                    <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-                                <div class="msg">
-                                    <p>Puff...</p>
-                                    <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
-                                    <p>Mejor otro día</p>
-                                    <time>20:18</time>
-                                </div>
-                                </li>
-                                <li class="other">
-                                        <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-                                    <div class="msg">
-                                        <p>Hola!</p>
-                                        <p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
-                                        <time>20:17</time>
-                                    </div>
-                                    </li>
-                                    <li class="self">
-                                        <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-                                    <div class="msg">
-                                        <p>Puff...</p>
-                                        <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
-                                        <p>Mejor otro día</p>
-                                        <time>20:18</time>
-                                    </div>
-                                    </li>
+                            
                         </ol>
                         <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
                 </div>
@@ -286,5 +236,10 @@
     </div>
 
     <% include ../layouts/script %>
+    <script>
+        var agent_id = JSON.parse('<%- JSON.stringify(agent._id) %>');
+        socket.emit('agent-online', agent_id);
+    </script>
+    
 </body>
 </html>

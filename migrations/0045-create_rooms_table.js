@@ -6,7 +6,9 @@ exports.up = function(db, next){
         autoIndexId: true,
         agent_id: String,
         customer_id: String,
-        status: Number
+        status: Number,
+        created_at: Date,
+        updated_at: Date
     });
     next();
 };

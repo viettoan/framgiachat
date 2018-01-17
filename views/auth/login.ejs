@@ -13,12 +13,12 @@
                 <% if (errorMessage) { %>
                     <h3><%= errorMessage %></h3>
                  <% } %>
-                <form class="form" name="login" action="/login" method="post">
+                <form class="form" name="login" id="formLogin" action="/login" method="post">
                     <input type="text" name="email" id="email" placeholder="Tài khoản / Email vatgia.com" />
                     <br />
                     <input type="password" name="password" id="login_password" placeholder="Mật khẩu" />
                     <br />
-                    <input type="submit" value="Đăng nhập" />
+                    <input type="submit"value="Đăng nhập" />
                     <br />
                     <div>
                         <p>

@@ -86,10 +86,14 @@ export default {
 			}
 			$('#chat-content').show();
 			$('#register-chat').hide();
+			this.guestRegister();
 		},
 		sendMessage: function() {
 			this.guest.appId = this.$parent.getAppId();
 			this.$socket.emit('guest-send-message', this.guest);
+		},
+		guestRegister: function() {
+			this.$socket.emit('guest-register', this.guest);
 		}
 	}
 };

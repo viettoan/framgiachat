@@ -17,7 +17,9 @@ var postSchema = new schema({
     status: {
         type: Number,
         default: 1
-    }
+    },
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('post', postSchema);

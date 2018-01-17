@@ -5,7 +5,9 @@ exports.up = function(db, next){
     db.createCollection('types', {
         autoIndexId: true,
         name: String,
-        description: String
+        description: String,
+        created_at: Date,
+        updated_at: Date
     });
     next();
 };
