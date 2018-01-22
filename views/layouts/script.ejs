@@ -9,3 +9,14 @@
 <script>
 	var socket = io('http://localhost:3000/');
 </script>
+<script>
+	(function() {
+		var ga = document.createElement('script'); 
+		ga.type = 'text/javascript';
+		ga.async=1;
+		ga.id = 'vchat-script';
+		ga.src = 'http://localhost:3000/js/bundle.js?appId=5a617348d22497483aeac293';
+		var s = document.getElementsByTagName('head')[0];
+		s.appendChild(ga);
+	})();
+</script>
