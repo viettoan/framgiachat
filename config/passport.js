@@ -1,5 +1,6 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var User            = require('../app/Models/User');
+var date = require('date-and-time');
 
 module.exports = function(passport) {
 
@@ -29,9 +30,12 @@ module.exports = function(passport) {
                     return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
                 } else {
                     if (password == req.body.passwordConfirm) {
+                        let now = new Date();
                         var newUser = new User();
                         newUser.email    = email;
                         newUser.password = newUser.generateHash(password);
+                        newUser.created_at = date.format(now, 'YYYY/MM/DD HH:mm:ss');
+                        newUser.updated_at = date.format(now, 'YYYY/MM/DD HH:mm:ss');
                         newUser.save(function(err) {
                             if (err) {
                                 throw err;

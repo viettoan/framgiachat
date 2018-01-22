@@ -29,7 +29,6 @@ new Vue({
 		getAppId: function () {
 			var src = $('#vchat-script').attr('src').replace(/^[^\?]+\??/,'');
 			var params = this.srcHandle(src);
-			console.log(params);
 			return params['appId'];
 		},
 		srcHandle: function (string) {
