@@ -27,24 +27,22 @@
 			</form>
 			<div id="chat-content">
 				<div class="chat-history">
-					<div class="chat-message clearfix agent-message">
-						<img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32">
-						<div class="chat-message-content clearfix">
-							<h5>Admin</h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-						</div> <!-- end chat-message-content -->
-					</div> <!-- end chat-message -->
-					<hr>
-					<div class="chat-message-content clearfix">
-						<span class="chat-time">13:37</span>
-						<h5>{{ guest.name }}</h5>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, nulla accusamus magni vel debitis numquam qui tempora rem voluptatem delectus!</p>
-					</div> <!-- end chat-message-content -->
-					<hr>
-
+					<div v-for="message in messages" >
+						<div v-if="message.user_id != message.sender_id" class="chat-message clearfix">
+							<img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32">
+							<div class="chat-message-content clearfix">
+								<h5>Admin</h5>
+								<p>{{ message.content }}</p>
+							</div> <!-- end chat-message-content -->
+						</div> <!-- end chat-message -->
+						<div v-else class="chat-message clearfix">
+							<div class="chat-message-content clearfix">
+								<h5>{{ guest.name }}</h5>
+								<p>{{ message.content }}</p>
+							</div> <!-- end chat-message-content -->
+						</div> <!-- end chat-message -->
+					</div>
 				</div> <!-- end chat-history -->
-
-				<p class="chat-feedback">Your partner is typing…</p>
 				<fieldset>
 					
 					<input type="text" v-model="guest.message" placeholder="Type your message…" @keyup.enter="sendMessage()" autofocus>
@@ -70,6 +68,30 @@ export default {
 				type: 1
 			},
 			error: '',
+			messages: [],
+		}
+	},
+	sockets: {
+		serverSendGuestNewMessage(data) {
+			$('.chat-history').append(`
+				<div class="chat-message clearfix" style="margin-left: 56px;">
+					<div class="chat-message-content clearfix">
+						<h5>${this.guest.name}</h5>
+						<p>${data.content}</p>
+					</div> <!-- end chat-message-content -->
+				</div> 
+			`);
+		},
+		serverSendAgentNewMessage(data) {
+			$('.chat-history').append(`
+				<div class="chat-message clearfix" style="margin: 16px 0;">
+					<img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32" style="border-radius: 50%; float: left;">
+					<div class="chat-message-content clearfix" style="margin-left: 56px;">
+						<h5>Admin</h5>
+						<p>${data.content}</p>
+					</div> <!-- end chat-message-content -->
+				</div> <!-- end chat-message -->
+			`);
 		}
 	},
 	methods: {
@@ -81,21 +103,34 @@ export default {
 			}
 			if (re.test(this.guest.email.toLowerCase()) == false) {
 				this.error = "Email Invalid";
-				console.log(this.error);
 				return false;
 			}
 			$('#chat-content').show();
 			$('#register-chat').hide();
 			this.guestRegister();
+			this.showMessage(this.$parent.getAppId(), this.guest.email);
 		},
 		sendMessage: function() {
 			this.guest.appId = this.$parent.getAppId();
 			this.$socket.emit('guest-send-message', this.guest);
+			this.guest.message = '';
 		},
 		guestRegister: function() {
 			this.guest.appId = this.$parent.getAppId();
 			this.$socket.emit('guest-register', this.guest);
-		}
+		},
+		showMessage: function(room_id, email) {
+			var axiosOptions = {
+				method: 'GET',
+				url: 'http://localhost:3000/show-message-user',
+				json: true,
+				params: {'room_id': room_id, 'email': email},
+			};
+
+			this.axios(axiosOptions).then(response => {
+				this.messages = response.data.messages;
+			});
+		},
 	}
 };
 </script>

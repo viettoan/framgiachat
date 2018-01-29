@@ -4,6 +4,7 @@ var mongodb = require('mongodb');
 exports.up = function(db, next){
     db.createCollection('customers', {
         autoIndexId : true,
+        agent_id: String,
         email: String,
         name: String,
         status: Number,
