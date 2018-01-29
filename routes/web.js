@@ -1,6 +1,7 @@
 var authMiddleware = require('../app/Middleware/AuthMiddleware.js');
-var messageController = require('../app/Controllers/Agent/MessageController.js');
-var guestUserController = require('../app/Controllers/Agent/GuestUserController.js');
+var agentMessageController = require('../app/Controllers/Agent/MessageController.js');
+var agentGuestUserController = require('../app/Controllers/Agent/GuestUserController.js');
+var guestMessageController = require('../app/Controllers/Guest/MessageController.js');
 
 module.exports = function(app, passport) {
     app.get('/', (req, res) => {
@@ -27,13 +28,15 @@ module.exports = function(app, passport) {
         failureFlash : true
     }));
 
-    app.get('/support', authMiddleware, guestUserController.index);
+    app.get('/support', authMiddleware, agentGuestUserController.index);
 
     app.get('/logout', (req, res) => {
         req.logout();
         res.redirect('/');
     });
 
-    app.get('/show-message-guest-user', messageController.index);
+    app.get('/show-message-guest-user-agent-page', agentMessageController.index);
+
+    app.get('/show-message-user', guestMessageController.index);
 };
 

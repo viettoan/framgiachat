@@ -165,7 +165,7 @@
                         <ol class="chat">
                             
                         </ol>
-                        <input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
+                        <input class="textarea" type="text" id="agent-message" placeholder="Type here!"/>
                 </div>
             </div>
             
@@ -253,6 +253,17 @@
                 </li>
             `);
         });
+        socket.on('server-send-agent-new-message', function(data) {
+            $('#chat-box .chat').append(`
+                <li class="self">
+                    <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                    <div class="msg">
+                        <p>${data.content }</p>
+                        <time>${data.updated_at }</time>
+                    </div>
+                </li>
+            `);
+        });
         socket.on('server-send-new-guest', function(data) {
             console.log(data);
             $('#newchat_support table tbody').append(`
@@ -266,6 +277,25 @@
                     <td class="guest-status"></td>
                 </tr>
             `);
+        });
+
+        $(document).ready(function () {
+            $(document).on('keyup', '#agent-message', function (e) {
+                if(e.keyCode == 13)
+                {
+                    let message = $(this).val();
+                    let user_id = $(this).data('user');
+                    let content = {
+                        'message': message,
+                        'user_id': user_id,
+                        'agent_id': agent_id,
+                        'type': 0
+                    };
+                    socket.emit('agent-new-message', content);
+                    $(this).val('');
+                }
+                
+            });
         });
     </script>
     

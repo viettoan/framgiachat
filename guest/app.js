@@ -1,8 +1,15 @@
 import Vue from 'vue';
+import io from 'socket.io-client';
 import VueSocketio from 'vue-socket.io';
-import app from './components/app.vue'
 
-Vue.use(VueSocketio, 'http://localhost:3000/');
+import app from './components/app.vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+export const SocketInstance = io('http://localhost:3000');
+
+Vue.use(VueAxios, axios)
+Vue.use(VueSocketio, SocketInstance);
 
 new Vue({
     el: '#vchat',
@@ -11,7 +18,8 @@ new Vue({
 		app: app
 	},
 	data: {
-		hash: '1'
+		hash: '1',
+		guestMessage: [],
 	},
     mounted: function() {
         $('#live-chat header').on('click', function() {
@@ -23,6 +31,7 @@ new Vue({
 			e.preventDefault();
 			$('#live-chat').fadeOut(300);
 		});
+
 		$('#chat-content').hide();
 	},
 	methods: {
