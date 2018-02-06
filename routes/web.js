@@ -38,5 +38,7 @@ module.exports = function(app, passport) {
     app.get('/show-message-guest-user-agent-page', agentMessageController.index);
 
     app.get('/show-message-user', guestMessageController.index);
+
+    app.post('/store-guest-message-file', guestMessageController.store);
 };
 

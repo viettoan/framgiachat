@@ -166,13 +166,15 @@
                             
                         </ol>
                         <input class="textarea" type="text" id="agent-message" placeholder="Type here!"/>
+                        <input type="file" id="upload-file">
+                        <img src="http://localhost:3000/images/upload.png" id="upload-image">
                 </div>
             </div>
             
         </div>
         <div id="sp_ad" class="hide">
             <span class="close_ad" onclick="close_ad()">x</span>
-                            <a class="ad_sp_right" href="http://vchat.vn/vchat_landing/noel/index.html" target="_blank" title="vChat Marketing tháng 12"><img src="../pictures/advertive/kfg1514342628.png" /></a>
+            <a class="ad_sp_right" href="http://vchat.vn/vchat_landing/noel/index.html" target="_blank" title="vChat Marketing tháng 12"><img src="../pictures/advertive/kfg1514342628.png" /></a>
         </div>
     </div>
     <a class="vc_group" href="https://www.facebook.com/groups/251299398613108/" target="_blank">Group hỗ trợ vChat</a>
@@ -264,6 +266,31 @@
                 </li>
             `);
         });
+        socket.on('server-send-agent-new-message-file', function(data) {
+            $('#chat-box .chat').append(`
+                <li class="self">
+                    <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                    <div class="msg">
+                        <img src="http://localhost:3000/images/${data.content}">
+                        <time>${data.updated_at }</time>
+                    </div>
+                </li>
+            `);
+        });
+        socket.on('server-send-guest-new-message-file', function(data) {
+            $('#newchat_support table tbody').find('#' + data.user_id).find('.guest-status').html(`
+            New
+        `)
+        $('#chat-box .chat').append(`
+            <li class="other">
+                <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                <div class="msg">
+                    <img src="http://localhost:3000/images/${data.content}">
+                    <time>${data.updated_at }</time>
+                </div>
+            </li>
+        `);
+        });
         socket.on('server-send-new-guest', function(data) {
             console.log(data);
             $('#newchat_support table tbody').append(`
@@ -289,12 +316,28 @@
                         'message': message,
                         'user_id': user_id,
                         'agent_id': agent_id,
-                        'type': 0
+                        'type': 1
                     };
                     socket.emit('agent-new-message', content);
                     $(this).val('');
                 }
                 
+            });
+
+            $(document).on('change', '#upload-file', function () {
+                file = event.target.files[0] || event.dataTransfer.files[0];
+                var reader = new FileReader();
+                var  user_id = $(this).data('user');
+                reader.onload = (e) => {
+                    var buffer = e.target.result;
+                    let content = {
+                        'user_id': user_id,
+                        'agent_id': agent_id,
+                        'type': 0
+                    };
+                    socket.emit('agent-new-message-file', content, file.name, buffer);      
+                };
+                reader.readAsBinaryString(file);
             });
         });
     </script>

@@ -29,6 +29,7 @@
     "express-session": "~1.14.1",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
+    "font-awesome": "^4.7.0",
     "method-override": "~2.3.6",
     "mongodb-migrate": "^2.0.2",
     "mongoose": "~4.13.1",

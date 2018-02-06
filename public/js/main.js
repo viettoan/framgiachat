@@ -1,5 +1,10 @@
 $(document).ready(function() {
     $('#chat-box').hide();
+
+    $(document).on('click', '#upload-image', function () {
+        $('#upload-file').click();
+    });
+
     $(document).on('click', '.guest-user', function () {
         $(this).find('.guest-status').html('');
         $('#chat-box').show();
@@ -18,7 +23,7 @@ $(document).ready(function() {
                         <li class="self">
                             <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
                             <div class="msg">
-                                <p>${res.messages[i].content }</p>
+                                ${(res.messages[i].type_id == 0) ? `<img src="http://localhost:3000/images/${res.messages[i].content }">`: `<p>${res.messages[i].content }</p>`}
                                 <time>${res.messages[i].updated_at }</time>
                             </div>
                         </li>
@@ -28,7 +33,7 @@ $(document).ready(function() {
                         <li class="other">
                             <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
                             <div class="msg">
-                                <p>${res.messages[i].content }</p>
+                                ${(res.messages[i].type_id == 0) ? `<img src="http://localhost:3000/images/${res.messages[i].content }">`: `<p>${res.messages[i].content }</p>`}
                                 <time>${res.messages[i].updated_at }</time>
                             </div>
                         </li>
@@ -37,8 +42,11 @@ $(document).ready(function() {
                 
             }
             list += `</ol>
-                    <input class="textarea" type="text" data-user="${guestUserId}" id="agent-message" placeholder="Type here!"/>`;
+                    <input class="textarea" type="text" data-user="${guestUserId}" id="agent-message" placeholder="Type here!"/>
+                    <input type="file" id="upload-file" data-user="${guestUserId}">
+                    <img src="http://localhost:3000/images/upload.png" id="upload-image">
+                    `;
             $('#chat-box').html(list);
         });
-    })
-})
+    });
+});

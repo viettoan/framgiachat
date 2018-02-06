@@ -20,6 +20,10 @@ class MessageController
         
     }
 
+    store(req, res)
+    {
+        res.json(req.query.data);
+    }
 }
 
 
