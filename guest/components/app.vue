@@ -79,7 +79,7 @@ export default {
                 <div class="chat-message clearfix" style="margin-left: 56px;">
                     <div class="chat-message-content clearfix">
                         <h5>${this.guest.name}</h5>
-                        <p>${data.content}</p>
+                        ${(data.type_id == 0) ? `<img src="http://localhost:3000/images/${data.content }" style="max-width: 180px; max-height: 135px;">`: `<p>${data.content }</p>`}
                     </div> <!-- end chat-message-content -->
                 </div> 
             `);
@@ -90,32 +90,11 @@ export default {
                     <img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32" style="border-radius: 50%; float: left;">
                     <div class="chat-message-content clearfix" style="margin-left: 56px;">
                         <h5>Admin</h5>
-                        <p>${data.content}</p>
+                        ${(data.type_id == 0) ? `<img src="http://localhost:3000/images/${data.content }" style="max-width: 180px; max-height: 135px;">`: `<p>${data.content }</p>`}
                     </div> <!-- end chat-message-content -->
                 </div> <!-- end chat-message -->
             `);
         },
-        serverSendAgentNewMessageFile(data) {
-            $('.chat-history').append(`
-                <div class="chat-message clearfix" style="margin: 16px 0;">
-                    <img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32" style="border-radius: 50%; float: left;">
-                    <div class="chat-message-content clearfix" style="margin-left: 56px;">
-                        <h5>Admin</h5>
-                        <img src="http://localhost:3000/images/${data.content}" class="image-file" style="max-width: 180px; max-height: 135px;">
-                    </div> <!-- end chat-message-content -->
-                </div> <!-- end chat-message -->
-            `);
-        },
-        serverSendGuestNewMessageFile(data) {
-            $('.chat-history').append(`
-                <div class="chat-message clearfix" style="margin-left: 56px;">
-                    <div class="chat-message-content clearfix">
-                        <h5>${this.guest.name}</h5>
-                        <img src="http://localhost:3000/images/${data.content}" class="image-file" style="max-width: 180px; max-height: 135px;">
-                    </div> <!-- end chat-message-content -->
-                </div>
-            `);
-        }
     },
     methods: {
         chatUp: function() {
@@ -167,7 +146,8 @@ export default {
             reader.onload = (e) => {
                 var buffer = e.target.result;
                 vm.guest.type = 0;
-                vm.$socket.emit('guest-send-message-file', vm.guest, file.name, buffer);      
+                vm.guest.message = file.name;
+                vm.$socket.emit('guest-send-message-file', vm.guest, buffer);      
             };
             reader.readAsBinaryString(file);
         },

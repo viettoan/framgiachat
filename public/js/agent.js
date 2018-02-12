@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var agent_id = JSON.parse('<%- JSON.stringify(agent._id) %>');
     socket.emit('agent-online', agent_id);
     socket.on('server-send-guest-new-message', function(data) {
         $('#newchat_support table tbody').find('#' + data.user_id).find('.guest-status').html(`
@@ -9,25 +8,26 @@ $(document).ready(function() {
             <li class="other">
                 <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
                 <div class="msg">
-                    <p>${data.content }</p>
+                    ${(data.type_id == 0) ? `<img src="http://localhost:3000/images/${data.content }">`: `<p>${data.content }</p>`}
                     <time>${data.updated_at }</time>
                 </div>
             </li>
         `);
     });
+
     socket.on('server-send-agent-new-message', function(data) {
         $('#chat-box .chat').append(`
             <li class="self">
                 <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
                 <div class="msg">
-                    <p>${data.content }</p>
+                    ${(data.type_id == 0) ? `<img src="http://localhost:3000/images/${data.content }">`: `<p>${data.content }</p>`}
                     <time>${data.updated_at }</time>
                 </div>
             </li>
         `);
     });
+
     socket.on('server-send-new-guest', function(data) {
-        console.log(data);
         $('#newchat_support table tbody').append(`
             <tr class="guest-user" id="${data._id}">
                 <td>
@@ -43,6 +43,7 @@ $(document).ready(function() {
 
     $(document).ready(function () {
         $(document).on('keyup', '#agent-message', function (e) {
+            console.log(1);
             if(e.keyCode == 13)
             {
                 let message = $(this).val();
@@ -51,12 +52,29 @@ $(document).ready(function() {
                     'message': message,
                     'user_id': user_id,
                     'agent_id': agent_id,
-                    'type': 0
+                    'type': 1
                 };
                 socket.emit('agent-new-message', content);
                 $(this).val('');
             }
             
+        });
+
+        $(document).on('change', '#upload-file', function () {
+            file = event.target.files[0] || event.dataTransfer.files[0];
+            var reader = new FileReader();
+            var  user_id = $(this).data('user');
+            reader.onload = (e) => {
+                var buffer = e.target.result;
+                let content = {
+                    'user_id': user_id,
+                    'agent_id': agent_id,
+                    'message': file.name,
+                    'type': 0
+                };
+                socket.emit('agent-new-message-file', content, buffer);      
+            };
+            reader.readAsBinaryString(file);
         });
     });
 });
