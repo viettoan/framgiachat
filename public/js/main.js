@@ -49,4 +49,8 @@ $(document).ready(function() {
             $('#chat-box').html(list);
         });
     });
+
+    $(document).on('click', '.guest-online', function () {
+        $('#chat-box').show();
+    });
 });

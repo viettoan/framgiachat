@@ -5,6 +5,9 @@ import VueSocketio from 'vue-socket.io';
 import app from './components/app.vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+const { detect } = require('detect-browser');
+const browser = detect();
+import moment from 'moment';
 
 export const SocketInstance = io('http://localhost:3000');
 
@@ -15,11 +18,16 @@ new Vue({
     el: '#vchat',
     template: '<app></app>',
 	components: {
-		app: app
+		app: app,
 	},
 	data: {
 		hash: '1',
 		guestMessage: [],
+		browser: {
+			title: '',
+			appId: '',
+			time: '',
+		},
 	},
     mounted: function() {
         $('#live-chat header').on('click', function() {
@@ -39,6 +47,13 @@ new Vue({
 			var src = $('#vchat-script').attr('src').replace(/^[^\?]+\??/,'');
 			var params = this.srcHandle(src);
 			return params['appId'];
+		},
+		getBrowser: function () {
+			this.browser.time = moment().format('MM DD YY, h:mm:ss');
+			this.browser.title = document.title;
+			this.browser.appId = this.getAppId();
+			
+			return this.browser;
 		},
 		srcHandle: function (string) {
 			var Params = new Object ();

@@ -74,6 +74,9 @@ export default {
         }
     },
     sockets: {
+        connect: function(){
+            this.$socket.emit('guest-online', this.$parent.getBrowser());
+        },
         serverSendGuestNewMessage(data) {
             $('.chat-history').append(`
                 <div class="chat-message clearfix" style="margin-left: 56px;">
@@ -146,9 +149,8 @@ export default {
             reader.onload = (e) => {
                 var buffer = e.target.result;
                 vm.guest.type = 0;
-                vm.guest.message = file.name;
-                vm.$socket.emit('guest-send-message-file', vm.guest, buffer);      
-            };
+                vm.$socket.emit('guest-send-message-file', vm.guest, file.name,  buffer);
+            }
             reader.readAsBinaryString(file);
         },
     }
