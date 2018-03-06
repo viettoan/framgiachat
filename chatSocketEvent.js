@@ -2,9 +2,10 @@ var agentNewMessage = require('./app/Events/Agent/AgentNewMessage.js');
 var guestNewMessage = require('./app/Events/Guest/GuestNewMessage.js');
 var guestRegister = require('./app/Events/Guest/GuestRegister.js');
 
+
 module.exports = function(io) {
+    var guests = [];
     io.on('connection', function(socket) {
-        console.log(socket);
         socket.on('agent-online', function (data) {
             socket.join(data);
             socket.agent_id = data;
@@ -19,14 +20,36 @@ module.exports = function(io) {
             } else {
                 sid = sid.split('=')[1];
             }
-            
-            data['id'] = sid;
-            data['ip'] = socket.request.connection.remoteAddress;
-            let sockets = io.sockets.sockets;
-            for (let i in sockets) {
-                if (sockets[i].agent_id == data.appId) {
-                    io.to(sockets[i].id).emit('server-send-guest-online', data);
+            console.log(guests);
+            if (guests.indexOf(sid) < 0) {
+                data['id'] = socket.id;
+                data['ip'] = socket.request.connection.remoteAddress;
+                let sockets = io.sockets.sockets;
+                for (let i in sockets) {
+                    if (sockets[i].agent_id == data.appId) {
+                        io.to(sockets[i].id).emit('server-send-guest-online', data);
+                    }
                 }
+                guests.push(sid);
+                socket.appId = data.appId;
+            }
+            
+        });
+
+        socket.on('disconnect', function () {
+            var headers_cookie =  socket.request.headers.cookie;
+            var sid = headers_cookie.split(';')[0];
+    
+            if (sid.split('=')[0] == 'io') {
+                sid = headers_cookie.split(';')[1];
+                sid = sid.split('=')[1];
+            } else {
+                sid = sid.split('=')[1];
+            }
+    
+            if (guests.indexOf(sid) >= 0) {
+                guests.splice(sid, 1);
+                io.to(socket.appId).emit('server-send-guest-offline', socket.id);
             }
         });
 

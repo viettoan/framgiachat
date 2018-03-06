@@ -58,6 +58,10 @@ $(document).ready(function() {
         `);
     });
 
+    socket.on('server-send-guest-offline', function(data) {
+        $('#customer_online table tbody').find('#' + data).remove();
+    });
+
     $(document).on('keyup', '#agent-message', function (e) {
         console.log(1);
         if(e.keyCode == 13)
