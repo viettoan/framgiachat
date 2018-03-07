@@ -52,5 +52,16 @@ $(document).ready(function() {
 
     $(document).on('click', '.guest-online', function () {
         $('#chat-box').show();
+        $('#chat-box').html(`
+            <div class="menu">
+                <div class="back"><i class="fa fa-chevron-left"></i> <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                <div class="name">Alex</div>
+                <div class="last">18:09</div>
+            </div>
+            <ol class="chat">
+                
+            </ol>
+            <input class="textarea" type="text" data-guest="${ $(this).attr('id') }" id="agent-message-guest" placeholder="Type here!"/>
+        `);
     });
 });
