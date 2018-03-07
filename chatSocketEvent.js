@@ -1,7 +1,7 @@
 var agentNewMessage = require('./app/Events/Agent/AgentNewMessage.js');
 var guestNewMessage = require('./app/Events/Guest/GuestNewMessage.js');
 var guestRegister = require('./app/Events/Guest/GuestRegister.js');
-
+var date = require('date-and-time');
 
 module.exports = function(io) {
     var guests = [];
@@ -55,6 +55,13 @@ module.exports = function(io) {
 
         socket.on('agent-new-message', (data) => {
             agentNewMessage.store(data, io, socket);
+        });
+
+        socket.on('agent-new-message-guest', (data) => {
+            let now = new Date();
+            data.updated_at = date.format(now, 'YYYY/MM/DD HH:mm:ss');
+            io.to(data.agent_id).emit('server-send-agent-new-message-guest', data);
+            io.to(data.guest_id).emit('serverSendAgentNewMessageGuest', data);
         });
 
         socket.on('agent-new-message-file', function (data, buffer) {

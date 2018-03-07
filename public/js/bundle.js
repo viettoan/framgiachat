@@ -8754,7 +8754,6 @@ module.exports = function(obj, fn){
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data() {
@@ -8796,6 +8795,17 @@ module.exports = function(obj, fn){
                 </div> <!-- end chat-message -->
             `);
         },
+        serverSendAgentNewMessageGuest(data) {
+            $('#register-chat').prepend(`
+                <div class="chat-message clearfix" style="margin-top: -10px; margin-bottom: 10px;border: 1px solid #fc0303; border-radius: 3px; overflow: auto; padding: 5px 0px;">
+                    <img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32" style="border-radius: 50%; float: left;">
+                    <div class="chat-message-content clearfix" style="margin-left: 56px;">
+                        <h5>Admin</h5>
+                        ${(data.type == 0) ? `<img src="http://localhost:3000/images/${data.message }" style="max-width: 180px; max-height: 135px;">`: `<p>${data.message }</p>`}
+                    </div> <!-- end chat-message-content -->
+                </div> <!-- end chat-message -->
+            `);
+        }
     },
     methods: {
         chatUp: function() {
