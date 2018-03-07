@@ -27,6 +27,18 @@ $(document).ready(function() {
         `);
     });
 
+    socket.on('server-send-agent-new-message-guest', function(data) {
+        $('#chat-box .chat').append(`
+            <li class="self">
+                <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                <div class="msg">
+                    ${(data.type == 0) ? `<img src="http://localhost:3000/images/${data.message }">`: `<p>${data.message }</p>`}
+                    <time>${data.updated_at }</time>
+                </div>
+            </li>
+        `);
+    });
+
     socket.on('server-send-new-guest', function(data) {
         $('#newchat_support table tbody').append(`
             <tr class="guest-user" id="${data._id}">
@@ -58,8 +70,11 @@ $(document).ready(function() {
         `);
     });
 
+    socket.on('server-send-guest-offline', function(data) {
+        $('#customer_online table tbody').find('#' + data).remove();
+    });
+
     $(document).on('keyup', '#agent-message', function (e) {
-        console.log(1);
         if(e.keyCode == 13)
         {
             let message = $(this).val();
@@ -73,7 +88,22 @@ $(document).ready(function() {
             socket.emit('agent-new-message', content);
             $(this).val('');
         }
-        
+    });
+
+    $(document).on('keyup', '#agent-message-guest', function (e) {
+        let guest_id = $(this).data('guest');
+        if(e.keyCode == 13)
+        {
+            let message = $(this).val();
+            let content = {
+                'message': message,
+                'agent_id': agent_id,
+                'guest_id': guest_id,  
+                'type': 1
+            };
+            socket.emit('agent-new-message-guest', content);
+            $(this).val('');
+        }
     });
 
     $(document).on('change', '#upload-file', function () {
